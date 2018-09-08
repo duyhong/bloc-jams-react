@@ -15,7 +15,10 @@ class Album extends Component {
        currentSong: album.songs[0],
        currentTime: 0,
        duration: album.songs[0].duration,
-       isPlaying: false
+       isPlaying: false,
+       isPaused: false,
+       displayPause: false,
+       displayPlay: false
      };
 
      this.audioElement = document.createElement('audio');
@@ -88,6 +91,19 @@ class Album extends Component {
      this.setState({ currentTime: newTime });
    }
 
+   handleMouseEnter() {
+     if(this.state.isPlaying) {
+       this.setState({ displayPause: true });
+     } else {
+       this.setState({ displayPlay: true });
+     }
+   }
+
+   handleMouseLeave() {
+     this.setState({ displayPlay: false });
+     this.setState({ displayPause: false });
+   }
+
    render() {
      return (
        <section className="album">
@@ -107,7 +123,13 @@ class Album extends Component {
            </colgroup>
            <tbody>
              {this.state.album.songs.map( (song, index) =>
-               <tr className="song" key={index} onClick={() => this.handleSongClick(song)} > </tr>
+               <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
+                                                onMouseEnter={() => this.handleMouseEnter()}
+                                                onMouseLeave={() => this.handleMouseLeave()} >
+                 <td>{this.state.displayPause? <ion-icon name="pause"></ion-icon> : this.state.displayPlay? <ion-icon name="play-circle"></ion-icon> : index+1 }</td>
+                 <td>{song.title}</td>
+                 <td>{song.duration}</td>
+               </tr>
              )}
            </tbody>
          </table>
@@ -118,6 +140,7 @@ class Album extends Component {
            duration={this.audioElement.duration}
            handleSongClick={() => this.handleSongClick(this.state.currentSong)}
            handlePrevClick={() => this.handlePrevClick()}
+           handleNextClick={() => this.handleNextClick()}
            handleTimeChange={(e) => this.handleTimeChange(e)}
          />
        </section>
