@@ -16,7 +16,6 @@ class Album extends Component {
        currentTime: 0,
        duration: album.songs[0].duration,
        isPlaying: false,
-       isPaused: false,
        displayPause: false,
        displayPlay: false
      };
@@ -92,19 +91,36 @@ class Album extends Component {
    }
 
    handleMouseEnter() {
+     // console.log("this.state.isPlaying: " + this.state.isPlaying);
      if(this.state.isPlaying) {
        this.setState({ displayPause: true });
+       this.setState({ displayPlay: false });
      } else {
        this.setState({ displayPlay: true });
+       this.setState({ displayPause: false });
      }
    }
 
    handleMouseLeave() {
+     // console.log(this.state.displayPlay);
      this.setState({ displayPlay: false });
      this.setState({ displayPause: false });
    }
 
    render() {
+     // const displayPause = this.state.displayPause;
+     // const displayPlay = this.state.displayPlay;
+     // const isPlaying = this.state.isPlaying;
+     // let icon;
+     //
+     // if(this.state.displayPause} {
+     //   icon = <ion-icon name="pause"></ion-icon>;
+     // } else if(this.state.displayPlay) {
+     //   icon = <ion-icon name="play-circle"></ion-icon>;
+     // } else {
+     //   icon = index+1;
+     // }
+
      return (
        <section className="album">
          <section id="album-info">
@@ -124,9 +140,9 @@ class Album extends Component {
            <tbody>
              {this.state.album.songs.map( (song, index) =>
                <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
-                                                onMouseEnter={() => this.handleMouseEnter()}
-                                                onMouseLeave={() => this.handleMouseLeave()} >
-                 <td>{this.state.displayPause? <ion-icon name="pause"></ion-icon> : this.state.displayPlay? <ion-icon name="play-circle"></ion-icon> : index+1 }</td>
+                                                onMouseEnter={this.handleMouseEnter}
+                                                onMouseLeave={this.handleMouseLeave} >
+                 <td>{this.state.displayPause ? (<PauseIcon/>) : this.state.displayPlay ? (<PlayIcon/>) : index + 1 }</td>
                  <td>{song.title}</td>
                  <td>{song.duration}</td>
                </tr>
@@ -146,6 +162,14 @@ class Album extends Component {
        </section>
      );
    }
+}
+
+function PlayIcon(props) {
+  return (<ion-icon name="play-circle" onMouseEnter={props.onMouseEnter} ></ion-icon>);
+}
+
+function PauseIcon(props) {
+  return (<ion-icon name="pause" onMouseEnter={props.onMouseEnter} ></ion-icon>);
 }
 
 export default Album;
