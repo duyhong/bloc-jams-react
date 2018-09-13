@@ -16,8 +16,10 @@ class Album extends Component {
        currentTime: 0,
        duration: album.songs[0].duration,
        isPlaying: false,
-       displayPause: false,
-       displayPlay: false
+       currentIndex: null,
+       hoverIndex: null,
+       showPause: false,
+       showPlay: false
      };
 
      this.audioElement = document.createElement('audio');
@@ -58,8 +60,9 @@ class Album extends Component {
      this.setState({ currentSong: song });
    }
 
-   handleSongClick(song) {
+   handleSongClick(song, index) {
      const isSameSong = this.state.currentSong === song;
+     this.setState({ currentIndex: index });
      if (this.state.isPlaying && isSameSong) {
        this.pause();
      } else {
@@ -69,17 +72,19 @@ class Album extends Component {
    }
 
    handlePrevClick() {
-      const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
-      const newIndex = Math.max(0, currentIndex - 1);
+      // const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+      const newIndex = Math.max(0, this.state.currentIndex - 1);
       const newSong = this.state.album.songs[newIndex];
+      this.setState({currentIndex: newIndex});
       this.setSong(newSong);
       this.play();
    }
 
    handleNextClick() {
-     const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
-     const newIndex = Math.min(this.state.album.songs.length, currentIndex + 1);
+     // const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+     const newIndex = Math.min(this.state.album.songs.length, this.state.currentIndex + 1);
      const newSong = this.state.album.songs[newIndex];
+     this.setState({currentIndex: newIndex});
      this.setSong(newSong);
      this.play();
    }
@@ -90,37 +95,21 @@ class Album extends Component {
      this.setState({ currentTime: newTime });
    }
 
-   handleMouseEnter() {
-     // console.log("this.state.isPlaying: " + this.state.isPlaying);
-     if(this.state.isPlaying) {
-       this.setState({ displayPause: true });
-       this.setState({ displayPlay: false });
-     } else {
-       this.setState({ displayPlay: true });
-       this.setState({ displayPause: false });
+   handleMouseEnter(index) {
+     if(this.state.currentIndex === index && this.state.isPlaying) {
+         this.setState({ showPause: true });
      }
+     this.setState({ showPlay: true });
+     this.setState({ hoverIndex: index});
    }
 
    handleMouseLeave() {
-     // console.log(this.state.displayPlay);
-     this.setState({ displayPlay: false });
-     this.setState({ displayPause: false });
+     this.setState({ showPause: false });
+     this.setState({ showPlay: false });
+     this.setState({ hoverIndex: null});
    }
 
    render() {
-     // const displayPause = this.state.displayPause;
-     // const displayPlay = this.state.displayPlay;
-     // const isPlaying = this.state.isPlaying;
-     // let icon;
-     //
-     // if(this.state.displayPause} {
-     //   icon = <ion-icon name="pause"></ion-icon>;
-     // } else if(this.state.displayPlay) {
-     //   icon = <ion-icon name="play-circle"></ion-icon>;
-     // } else {
-     //   icon = index+1;
-     // }
-
      return (
        <section className="album">
          <section id="album-info">
@@ -139,10 +128,10 @@ class Album extends Component {
            </colgroup>
            <tbody>
              {this.state.album.songs.map( (song, index) =>
-               <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
-                                                onMouseEnter={() => this.handleMouseEnter()}
+               <tr className="song" key={index} onClick={() => this.handleSongClick(song, index)}
+                                                onMouseEnter={() => this.handleMouseEnter(index)}
                                                 onMouseLeave={() => this.handleMouseLeave()} >
-                 <td>{this.state.displayPause ? (<PauseIcon/>) : this.state.displayPlay ? (<PlayIcon/>) : index + 1 }</td>
+                 <td>{this.state.hoverIndex === index && this.state.showPause ? (<PauseIcon/>) : this.state.hoverIndex === index && this.state.showPlay ? (<PlayIcon/>) : index + 1 }</td>
                  <td>{song.title}</td>
                  <td>{song.duration}</td>
                </tr>
