@@ -132,9 +132,9 @@ class Album extends Component {
                <tr className="song" key={index} onClick={() => this.handleSongClick(song, index)}
                                                 onMouseEnter={() => this.handleMouseEnter(index)}
                                                 onMouseLeave={() => this.handleMouseLeave()} >
-                 <td>{this.state.hoverIndex === index && this.state.showPause ? (<PauseIcon/>) : this.state.hoverIndex === index && this.state.showPlay ? (<PlayIcon/>) : index + 1 }</td>
+                 <td id="song-number">{this.state.hoverIndex === index && this.state.showPause ? (<PauseIcon/>) : this.state.hoverIndex === index && this.state.showPlay ? (<PlayIcon/>) : index + 1 }</td>
                  <td>{song.title}</td>
-                 <td>{song.duration}</td>
+                 <td id="duration-time">{song.duration}</td>
                </tr>
              )}
            </tbody>
