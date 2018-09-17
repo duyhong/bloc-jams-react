@@ -150,7 +150,7 @@ class Album extends Component {
                                                 onMouseLeave={() => this.handleMouseLeave()} >
                  <td id="song-number">{this.state.hoverIndex === index && this.state.showPause ? (<PauseIcon/>) : this.state.hoverIndex === index && this.state.showPlay ? (<PlayIcon/>) : index + 1 }</td>
                  <td>{song.title}</td>
-                 <td id="duration-time">{song.duration}</td>
+                 <td id="duration-time">{this.formatTime(song.duration)}</td>
                </tr>
              )}
            </tbody>
