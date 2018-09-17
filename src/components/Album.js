@@ -16,6 +16,7 @@ class Album extends Component {
        currentSong: album.songs[0],
        currentTime: 0,
        duration: album.songs[0].duration,
+       currentVolume: 0,
        isPlaying: false,
        currentIndex: null,
        hoverIndex: null,
@@ -96,6 +97,12 @@ class Album extends Component {
      this.setState({ currentTime: newTime });
    }
 
+   handleVolumeChange(e) {
+     const newVolume = this.audioElement.volume * e.target.value;
+     this.audioElement.volume = newVolume;
+     this.setState({ currentVolume: newVolume});
+   }
+
    handleMouseEnter(index) {
      if(this.state.currentIndex === index && this.state.isPlaying) {
          this.setState({ showPause: true });
@@ -144,10 +151,12 @@ class Album extends Component {
            currentSong={this.state.currentSong}
            currentTime={this.audioElement.currentTime}
            duration={this.audioElement.duration}
+           currentVolume={this.audioElement.volume}
            handleSongClick={() => this.handleSongClick(this.state.currentSong)}
            handlePrevClick={() => this.handlePrevClick()}
            handleNextClick={() => this.handleNextClick()}
            handleTimeChange={(e) => this.handleTimeChange(e)}
+           handleVolumeChange={(e) => this.handleVolumeChange(e)}
          />
        </section>
      );
