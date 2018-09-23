@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import './App.css';
+import './style/main.css';
+import './style/App.css';
 import Landing from './components/Landing';
 import Library from './components/Library';
 import Album from './components/Album';
@@ -10,9 +11,11 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <nav>
-             <Link to='/'>Landing</Link>
-             <Link to='/library'>Library</Link>
+          <nav className="navbar">
+             <Link to='/' className="logo"><img src="assets/images/bloc_jams_logo.png" alt="bloc jams logo" className="logo" /></Link>
+             <div class="links-container">
+                <Link to='/library' className="navbar-link">Library</Link>
+             </div>
           </nav>
           <h1>Bloc Jams</h1>
         </header>
