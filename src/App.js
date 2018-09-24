@@ -5,7 +5,7 @@ import './style/App.css';
 import Landing from './components/Landing';
 import Library from './components/Library';
 import Album from './components/Album';
-import logo from './assets/images/bloc_jams_logo.png'
+//import logo from './assets/images/bloc_jams_logo.png'
 
 class App extends Component {
   render() {
@@ -13,7 +13,7 @@ class App extends Component {
       <div className="App">
         <header>
           <nav className="navbar">
-             <Link to='/' className="logo"><img src={logo} alt="bloc jams logo" className="logo" /></Link>
+             <Link to='/' className="logo"><img src='assets/images/bloc_jams_logo.png' alt="bloc jams logo" className="logo" /></Link>
              <div class="links-container">
                 <Link to='/library' className="navbar-link">Library</Link>
              </div>
