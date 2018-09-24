@@ -10,11 +10,16 @@ html {
  }
 
  body {
-     font-family: 'Open Sans'; // sets our font to the "Open Sans" typeface
-     color: white;             // sets the text color to white
+     font-family: 'Open Sans'; /* sets our font to the "Open Sans" typeface */
+     color: white;             /* sets the text color to white */
+     background-color: rgb(58,23,63);
      min-height: 100%;         /* says the height of the body must be, at minimum, 100% of the window */
  }
-
+/*
+ .landing {
+     background-color: rgb(58,23,63); /* sets the background color to an RGB value (see below)
+ }
+*/
 .navbar {
     position: relative;
     padding: 0.5rem;
@@ -64,7 +69,14 @@ html {
  .container.narrow {
      max-width: 56rem;
  }
-
+ .hero-content {
+   position: relative;  /* positioning will be explained in a resource */
+   min-height: 600px; /* hero content element must be _at least_ 600 pixels */
+   background-image: url(../assets/images/bloc_jams_bg.jpg);
+   background-repeat: no-repeat;
+   background-position: center center;
+   background-size: cover;
+ }
 /* Medium and small screens (640px)
  @media (min-width: 640px) {
    html { font-size: 112%; }
